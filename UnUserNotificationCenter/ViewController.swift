@@ -13,17 +13,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let center = UNUserNotificationCenter.current()
-        center.delegate = self//앱이 foreground일떄 울릴수있도록 설정
-        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
-            if granted {
-                print("Permission granted. Scheduling notification")
-                self.scheduleNotification()
-            }
-        }
+        self.scheduleNotification()
         
     }
-    func scheduleNotification() {
+    func scheduleNotification() { //알람생성 후 추가
         let notificationCenter = UNUserNotificationCenter.current()
         
         let notification = UNMutableNotificationContent() // 알람 인스턴스생성
@@ -37,11 +30,12 @@ class ViewController: UIViewController {
         dateComponents.hour = 8
         dateComponents.minute = 0
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false) // timeinterval 에 dateComponents를 넣어줌
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false) // timeinterval 에 dateComponents를 넣어줌
         
         let notificationRequest = UNNotificationRequest(identifier: UUID().uuidString, content: notification, trigger: trigger)
         
         notificationCenter.add(notificationRequest)
+        
         
 //        앱이 백그라운드에서 실행 중이거나 전혀 실행되지 않을 때만 사용자에게 표시됩니다.
     }
